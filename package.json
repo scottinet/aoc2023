@@ -1,14 +1,12 @@
 {
   "name": "aoc2023",
   "module": "index.ts",
-  "devDependencies": {
-    "bun-types": "latest"
-  },
+  "devDependencies": {},
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
-  "scripts": {
-    "day1": "bun day1/index.ts"
-  },
-  "type": "module"
+  "scripts": {},
+  "dependencies": {
+    "ts-node": "^10.9.1"
+  }
 }
