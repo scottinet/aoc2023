@@ -1,1 +1,1 @@
-console.log("Hello via Bun!");
+console.log("Advent of Code 2023");

@@ -1,6 +1,9 @@
 {
   "name": "aoc2023",
   "module": "index.ts",
+  "scripts": {
+    "day1": "bun day1/index.ts"
+  },
   "type": "module",
   "devDependencies": {
     "bun-types": "latest"
