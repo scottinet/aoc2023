@@ -9,6 +9,6 @@
     "singleAttributePerLine": true,
     "arrowParens": "always",
     "proseWrap": "preserve",
-    "endOfLine": "lf",
+    "endOfLine": "lf", 
     "plugins": ["prettier-plugin-organize-imports"]
 }
