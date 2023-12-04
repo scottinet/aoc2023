@@ -1,5 +1,5 @@
-import { Scratchcard } from 'day4/models/scratchcard.type';
-import fs from 'fs/promises';
+import { promises as fs } from 'fs';
+import { Scratchcard } from '../models/scratchcard.type';
 
 export async function parse(fileName: string): Promise<Array<Scratchcard>> {
   const scratchcards: Array<Scratchcard> = [];

@@ -176,3 +176,6 @@ dist
 
 # AoC Input data
 data/
+
+# Ignore compiled files
+**/*.js
