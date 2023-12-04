@@ -10,16 +10,19 @@ export async function parse(fileName: string): Promise<Array<Scratchcard>> {
       .replace(/^Card\s+\d+: /, '')
       .split('|');
 
-    const scratchcard: Scratchcard = {
-      winning: winningStr
-        .split(/\s+/)
-        .map((n) => parseInt(n, 10))
-        .filter((n) => !isNaN(n)),
-      scratched: scratchedStr
-        .split(/\s+/)
-        .map((n) => parseInt(n, 10))
-        .filter((n) => !isNaN(n)),
-    };
+    const winning = winningStr
+      .split(/\s+/)
+      .map((n) => parseInt(n, 10))
+      .filter((n) => !isNaN(n));
+
+    const scratched = scratchedStr
+      .split(/\s+/)
+      .map((n) => parseInt(n, 10))
+      .filter((n) => !isNaN(n));
+
+    const wins = scratched.filter((n) => winning.includes(n)).length;
+
+    const scratchcard: Scratchcard = { winning, scratched, wins };
 
     scratchcards.push(scratchcard);
   }
