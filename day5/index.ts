@@ -22,18 +22,35 @@ function getLocation(almanac: Almanac, seed: number): number {
   return nextStep;
 }
 
-async function part1(inputFileName: string): Promise<void> {
-  const almanac = await parse(inputFileName);
+async function part1(almanac: Almanac): Promise<void> {
   let lowestLocation = Infinity;
 
   for (const seed of almanac.seeds) {
     const location = getLocation(almanac, seed);
-    console.log(`Seed ${seed} ends at ${location}`);
-
     lowestLocation = Math.min(lowestLocation, location);
   }
 
-  console.log(`Lowest location is ${lowestLocation}`);
+  console.log(`(PART1) Lowest location is ${lowestLocation}`);
 }
 
-part1(process.argv[2]);
+async function part2(almanac: Almanac): Promise<void> {
+  let lowestLocation = Infinity;
+
+  for (let i = 0; i < almanac.seeds.length; i += 2) {
+    for (let j = 0; j < almanac.seeds[i + 1]; j++) {
+      const location = getLocation(almanac, almanac.seeds[i] + j);
+      lowestLocation = Math.min(lowestLocation, location);
+    }
+  }
+
+  console.log(`(PART2) Lowest location is ${lowestLocation}`);
+}
+
+async function main(inputFileName: string): Promise<void> {
+  const almanac = await parse(inputFileName);
+
+  await part1(almanac);
+  await part2(almanac);
+}
+
+main(process.argv[2]);
