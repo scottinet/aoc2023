@@ -25,7 +25,7 @@ export async function parse(inputFileName: string): Promise<Almanac> {
       const [destination, source, rangeLength] = line
         .split(' ')
         .map((value) => parseInt(value, 10));
-      mapCategory.ranges.push({ source, destination, rangeLength });
+      mapCategory.ranges.push({ source, destination, count: rangeLength });
     }
   }
 
