@@ -1,6 +1,6 @@
-import { Almanac } from 'day5/models/almanac.type';
-import { MapCategory } from 'day5/models/map-category.type';
 import { promises as fs } from 'fs';
+import { Almanac } from '../models/almanac.type';
+import { MapCategory } from '../models/map-category.type';
 
 export async function parse(inputFileName: string): Promise<Almanac> {
   const almanac: Almanac = { seeds: [], maps: [] };
