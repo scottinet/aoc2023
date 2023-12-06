@@ -17,9 +17,6 @@ export function part1(races: RaceRecord[]): void {
 
   for (let i = 0; i < races.length; i++) {
     const winning = getWinningRaces(races[i]);
-    console.log(
-      `Race ${i + 1}: ${winning.length} races can be won (${winning})`
-    );
     winningRaces *= winning.length;
   }
 
