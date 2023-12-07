@@ -7,13 +7,12 @@ function groupCards(cards: string): number[] {
   const jokerless = cards.split('').filter((c) => c !== 'J');
   const jokers = cards.length - jokerless.length;
 
-  for (const card of jokerless) {
-    const index = CARD_TYPES.indexOf(card);
-    groups[index]++;
-  }
+  jokerless.forEach((card) => {
+    groups[CARD_TYPES.indexOf(card)]++;
+  });
 
   groups = groups.sort((a, b) => b - a);
-  groups[0] = Math.min(jokers + groups[0], cards.length);
+  groups[0] += jokers;
 
   return groups;
 }
@@ -48,8 +47,7 @@ export function part2(hands: Hand[]): void {
   hands.sort(compareGroups);
 
   for (let i = 0; i < hands.length; i++) {
-    const hand = hands[i];
-    winnings += (i + 1) * hand.bid;
+    winnings += (i + 1) * hands[i].bid;
   }
 
   console.log(`Winnings: ${winnings}`);
