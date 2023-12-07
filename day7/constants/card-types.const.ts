@@ -1,1 +1,0 @@
-export const CARD_TYPES = '23456789TJQKA';

@@ -1,5 +1,19 @@
-import { CARD_TYPES } from './constants/card-types.const';
 import { Hand } from './models/hand.type';
+
+export const CARD_TYPES = '23456789TJQKA';
+
+function groupCards(cards: string): number[] {
+  let groups: number[] = [];
+
+  for (const card of cards) {
+    const index = CARD_TYPES.indexOf(card);
+    groups[index] = groups[index] ? groups[index] + 1 : 1;
+  }
+
+  groups = groups.filter((v) => v > 1).sort((a, b) => b - a);
+
+  return groups.length ? groups : [1];
+}
 
 function compareGroups(a: Hand, b: Hand): number {
   const firstGroupDiff = a.groups[0] - b.groups[0];
@@ -26,6 +40,11 @@ function compareGroups(a: Hand, b: Hand): number {
 
 export function part1(hands: Hand[]): void {
   let winnings = 0;
+
+  hands.forEach((hand) => {
+    hand.groups = groupCards(hand.cards);
+  });
+
   hands.sort(compareGroups);
 
   for (let i = 0; i < hands.length; i++) {
