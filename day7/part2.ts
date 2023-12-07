@@ -3,35 +3,27 @@ import { Hand } from './models/hand.type';
 export const CARD_TYPES = 'J23456789TQKA';
 
 function groupCards(cards: string): number[] {
-  let groups: number[] = [];
+  let groups: number[] = Array(CARD_TYPES.length).fill(0);
+  const jokerless = cards.split('').filter((c) => c !== 'J');
+  const jokers = cards.length - jokerless.length;
 
-  for (const card of cards.split('').filter((c) => c !== 'J')) {
+  for (const card of jokerless) {
     const index = CARD_TYPES.indexOf(card);
-    groups[index] = groups[index] ? groups[index] + 1 : 1;
+    groups[index]++;
   }
 
-  groups = groups.filter((v) => v > 1).sort((a, b) => b - a);
-
-  if (groups.length === 0) groups = [1];
-
-  const jokers = cards.split('').filter((c) => c === 'J').length;
-
-  groups[0] = Math.min(jokers + groups[0], 5);
-
-  if (groups.reduce((a, b) => a + b, 0) > 5) groups.pop();
+  groups = groups.sort((a, b) => b - a);
+  groups[0] = Math.min(jokers + groups[0], cards.length);
 
   return groups;
 }
 
 function compareGroups(a: Hand, b: Hand): number {
-  const firstGroupDiff = a.groups[0] - b.groups[0];
-  if (firstGroupDiff !== 0) {
-    return firstGroupDiff;
-  }
-
-  const groupsCountDiff = a.groups.length - b.groups.length;
-  if (groupsCountDiff !== 0) {
-    return groupsCountDiff;
+  for (let i = 0; i < 2; i++) {
+    const diff = a.groups[i] - b.groups[i];
+    if (diff !== 0) {
+      return diff;
+    }
   }
 
   for (let i = 0; i < a.cards.length; i++) {
