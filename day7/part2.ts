@@ -19,19 +19,14 @@ function groupCards(cards: string): number[] {
 
 function compareGroups(a: Hand, b: Hand): number {
   for (let i = 0; i < 2; i++) {
-    const diff = a.groups[i] - b.groups[i];
-    if (diff !== 0) {
-      return diff;
-    }
+    if (a.groups[i] !== b.groups[i]) return a.groups[i] - b.groups[i];
   }
 
   for (let i = 0; i < a.cards.length; i++) {
     const aIndex = CARD_TYPES.indexOf(a.cards[i]);
     const bIndex = CARD_TYPES.indexOf(b.cards[i]);
 
-    if (aIndex !== bIndex) {
-      return aIndex - bIndex;
-    }
+    if (aIndex !== bIndex) return aIndex - bIndex;
   }
 
   throw new Error('hands are equal');
