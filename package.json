@@ -10,6 +10,7 @@
   },
   "scripts": {},
   "dependencies": {
+    "compute-lcm": "^1.1.2",
     "ts-node": "^10.9.1"
   }
 }
