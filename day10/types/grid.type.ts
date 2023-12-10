@@ -8,6 +8,9 @@ export class Grid {
 
   constructor(input: string[]) {
     this.niceGrid = this.convertToNiceGrid(input);
+
+    // this.niceGrid.forEach((row) => console.log(row));
+
     this.content = this.convertToNodes(this.niceGrid);
     this.replaceStartNode();
     this.linkNode(this.start);
@@ -120,5 +123,13 @@ export class Grid {
     if (y < this.content.length - 1 && ['║', '╗', '╔'].includes(node.str)) {
       node.links.push(this.content[y + 1][x].coords);
     }
+  }
+
+  get maxX(): number {
+    return this.content[0].length;
+  }
+
+  get maxY(): number {
+    return this.content.length;
   }
 }
