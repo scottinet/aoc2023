@@ -4,28 +4,13 @@ import { Point } from './point.type';
 export class Grid {
   public start: GridNode;
   private readonly content: GridNode[][];
-  private readonly niceGrid: string[];
+  private readonly grid: string[];
 
   constructor(input: string[]) {
-    this.niceGrid = this.convertToNiceGrid(input);
-
-    // this.niceGrid.forEach((row) => console.log(row));
-
-    this.content = this.convertToNodes(this.niceGrid);
+    this.grid = input;
+    this.content = this.convertToNodes(this.grid);
     this.replaceStartNode();
     this.linkNode(this.start);
-  }
-
-  private convertToNiceGrid(input: string[]): string[] {
-    return input.map((row) =>
-      row
-        .replace(/\|/g, '║')
-        .replace(/-/g, '═')
-        .replace(/F/g, '╔')
-        .replace(/L/g, '╚')
-        .replace(/7/g, '╗')
-        .replace(/J/g, '╝')
-    );
   }
 
   public getNode(coords: Point): GridNode {
@@ -66,22 +51,22 @@ export class Grid {
 
     if (this.start.coords.y > 0) {
       const north = this.content[this.start.coords.y - 1][this.start.coords.x];
-      if (['║', '╔', '╗'].includes(north.str)) connectsTo[0] = 1;
+      if (['|', 'F', '7'].includes(north.str)) connectsTo[0] = 1;
     }
 
     if (this.start.coords.x < this.content[this.start.coords.y].length - 1) {
       const east = this.content[this.start.coords.y][this.start.coords.x + 1];
-      if (['═', '╗', '╝'].includes(east.str)) connectsTo[1] = 1;
+      if (['-', '7', 'J'].includes(east.str)) connectsTo[1] = 1;
     }
 
     if (this.start.coords.y < this.content.length - 1) {
       const south = this.content[this.start.coords.y + 1][this.start.coords.x];
-      if (['║', '╚', '╝'].includes(south.str)) connectsTo[2] = 1;
+      if (['|', 'L', 'J'].includes(south.str)) connectsTo[2] = 1;
     }
 
     if (this.start.coords.x > 0) {
       const west = this.content[this.start.coords.y][this.start.coords.x - 1];
-      if (['═', '╔', '╚'].includes(west.str)) connectsTo[3] = 1;
+      if (['-', 'F', 'L'].includes(west.str)) connectsTo[3] = 1;
     }
 
     if (connectsTo.reduce((acc, curr) => acc + curr, 0) !== 2) {
@@ -89,17 +74,17 @@ export class Grid {
     }
 
     if (connectsTo[0] === 1 && connectsTo[1] === 1) {
-      this.start.str = '╚';
+      this.start.str = 'L';
     } else if (connectsTo[1] === 1 && connectsTo[2] === 1) {
-      this.start.str = '╔';
+      this.start.str = 'F';
     } else if (connectsTo[2] === 1 && connectsTo[3] === 1) {
-      this.start.str = '╗';
+      this.start.str = '7';
     } else if (connectsTo[3] === 1 && connectsTo[0] === 1) {
-      this.start.str = '╝';
+      this.start.str = 'J';
     } else if (connectsTo[0] === 1 && connectsTo[2] === 1) {
-      this.start.str = '║';
+      this.start.str = '|';
     } else if (connectsTo[1] === 1 && connectsTo[3] === 1) {
-      this.start.str = '═';
+      this.start.str = '-';
     }
   }
 
@@ -108,19 +93,19 @@ export class Grid {
 
     const { x, y } = node.coords;
 
-    if (x > 0 && ['═', '╝', '╗'].includes(node.str)) {
+    if (x > 0 && ['-', 'J', '7'].includes(node.str)) {
       node.links.push(this.content[y][x - 1].coords);
     }
 
-    if (x < this.content[y].length - 1 && ['═', '╚', '╔'].includes(node.str)) {
+    if (x < this.content[y].length - 1 && ['-', 'L', 'F'].includes(node.str)) {
       node.links.push(this.content[y][x + 1].coords);
     }
 
-    if (y > 0 && ['║', '╚', '╝'].includes(node.str)) {
+    if (y > 0 && ['|', 'L', 'J'].includes(node.str)) {
       node.links.push(this.content[y - 1][x].coords);
     }
 
-    if (y < this.content.length - 1 && ['║', '╗', '╔'].includes(node.str)) {
+    if (y < this.content.length - 1 && ['|', '7', 'F'].includes(node.str)) {
       node.links.push(this.content[y + 1][x].coords);
     }
   }

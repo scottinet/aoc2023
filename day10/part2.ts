@@ -35,7 +35,6 @@ export function part2(grid: Grid): void {
   for (let y = 0; y < grid.maxY; y++) {
     for (let x = 0; x < grid.maxX; x++) {
       if (!loopNodes.some((node) => isEqual(node.coords, { x, y }))) {
-        const node = grid.getNode({ x, y });
         if (pointInPolygon([x, y], polygon)) enclosed++;
       }
     }
