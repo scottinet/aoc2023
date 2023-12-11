@@ -1,6 +1,6 @@
 import lcm from 'compute-lcm';
-import { DesertMap } from './models/desert-map.type';
-import { NodeFrequency } from './models/node-frequency.type';
+import { DesertMap } from './types/desert-map.type';
+import { NodeFrequency } from './types/node-frequency.type';
 
 function getPeriod(desertMap: DesertMap, startingNode: string): NodeFrequency {
   const freq: NodeFrequency = {
