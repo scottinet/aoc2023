@@ -11,6 +11,7 @@
   "scripts": {},
   "dependencies": {
     "compute-lcm": "^1.1.2",
+    "js-combinatorics": "^2.1.2",
     "point-in-polygon": "^1.1.0",
     "ts-node": "^10.9.1"
   }
