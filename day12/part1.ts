@@ -1,4 +1,4 @@
-import { SpringRecord } from './types/spring-record.type';
+import { SpringRow } from './types/spring-record.type';
 
 function getGroups(record: number[]): number[] {
   let inGroup = false;
@@ -22,10 +22,7 @@ function getGroups(record: number[]): number[] {
   return groups;
 }
 
-function testCombination(
-  springs: SpringRecord,
-  combination: number[]
-): boolean {
+function testCombination(springs: SpringRow, combination: number[]): boolean {
   const newRecord = springs.record.slice();
   let index = 0;
 
@@ -47,7 +44,7 @@ function testCombination(
   return true;
 }
 
-function combinations(springRecord: SpringRecord): number[][] {
+function combinations(springRecord: SpringRow): number[][] {
   const combinations: number[][] = [];
   const nanCount = springRecord.record.filter((n) => isNaN(n)).length;
 
@@ -63,7 +60,7 @@ function combinations(springRecord: SpringRecord): number[][] {
   return combinations;
 }
 
-export function part1(records: SpringRecord[]): void {
+export function part1(records: SpringRow[]): void {
   let count = 0;
   for (const record of records) {
     const comb = combinations(record);

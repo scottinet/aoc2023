@@ -1,4 +1,4 @@
-export type SpringRecord = {
+export type SpringRow = {
   record: number[];
   damaged: number[];
 };
