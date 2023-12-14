@@ -61,10 +61,6 @@ export function part1(patterns: string[][]): void {
     const columnsBeforeVerticalSeam = findColumnsBeforeVerticalSeam(pattern);
     const linesBeforeHorizontalSeam = findLinesBeforeHorizontalSeam(pattern);
     const total = columnsBeforeVerticalSeam + 100 * linesBeforeHorizontalSeam;
-    console.log(
-      `=== ${columnsBeforeVerticalSeam + 100 * linesBeforeHorizontalSeam} ===`
-    );
-    pattern.forEach((line) => console.log(line));
     count += total;
   }
 

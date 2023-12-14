@@ -1,6 +1,7 @@
 import { promises as fs } from 'fs';
 import { chrono } from '../utils/chrono';
 import { part1 } from './part1';
+import { part2 } from './part2';
 
 async function parse(inputFileName: string): Promise<string[][]> {
   const input = await fs.readFile(inputFileName, 'utf8');
@@ -25,6 +26,7 @@ async function main(inputFileName: string): Promise<void> {
   const patterns = await parse(inputFileName);
 
   chrono<string[][]>(part1, patterns, 'part1');
+  chrono<string[][]>(part2, patterns, 'part2');
 }
 
 main(process.argv[2]);
