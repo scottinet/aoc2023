@@ -2,6 +2,8 @@ import { SpringRow } from './types/spring-record.type';
 
 type Range = { min: number; max: number };
 
+const memoized = new Map<string, number>();
+
 function unfold(springRows: SpringRow[]): SpringRow[] {
   const unfolded: SpringRow[] = [];
 
@@ -30,6 +32,11 @@ function remaining(availableRanges: Range[], start: number): number {
   return available.length === 1 ? available[0].max - start : 0;
 }
 
+function memoize(key: string, count: number): number {
+  memoized.set(key, count);
+  return count;
+}
+
 function countAllowedRanges({
   springRow,
   availableRanges,
@@ -43,11 +50,15 @@ function countAllowedRanges({
   damagedIdx: number;
   minStart: number;
 }): number {
+  const key = `${damagedIdx}-${minStart}`;
+
+  if (memoized.has(key)) return memoized.get(key)!;
+
   if (damagedIdx === springRow.damaged.length) {
     for (let i = minStart; i < springRow.record.length; i++) {
-      if (springRow.record[i] === 1) return 0;
+      if (springRow.record[i] === 1) return memoize(key, 0);
     }
-    return 1;
+    return memoize(key, 1);
   }
 
   let count = 0;
@@ -58,7 +69,7 @@ function countAllowedRanges({
     i++
   ) {
     const r = remaining(availableRanges, i);
-    if (springRow.record[i - 1] === 1) return count;
+    if (springRow.record[i - 1] === 1) return memoize(key, count);
     if (r < springRow.damaged[damagedIdx]) continue;
     if (springRow.record[i + springRow.damaged[damagedIdx]] === 1) continue;
 
@@ -71,7 +82,7 @@ function countAllowedRanges({
     });
   }
 
-  return count;
+  return memoize(key, count);
 }
 
 function findRangeCombinations(springRow: SpringRow): number {
@@ -143,6 +154,7 @@ export function part2(springRows: SpringRow[]): void {
     const comb = findRangeCombinations(unfoldedRows[i]);
     console.log(`Row ${i + 1}: ${comb}`);
     count += comb;
+    memoized.clear();
   }
 
   console.log(`There are ${count} combinations`);

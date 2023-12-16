@@ -64,6 +64,7 @@ export function part1(records: SpringRow[]): void {
   let count = 0;
   for (const record of records) {
     const comb = combinations(record);
+    console.log(comb.length);
     count += comb.length;
   }
 

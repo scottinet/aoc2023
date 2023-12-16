@@ -29,7 +29,6 @@ async function main(inputFileName: string): Promise<void> {
 
   chrono<SpringRow[]>(part1, records, 'part1');
   chrono<SpringRow[]>(part2, records, 'part2');
-  return;
 }
 
 main(process.argv[2]);
