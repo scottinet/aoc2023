@@ -9,7 +9,7 @@ type GraphNode = {
   value: number;
 };
 
-function dijkstra({
+function bfs({
   input,
   startx,
   starty,
@@ -78,7 +78,7 @@ function dijkstra({
 
 function part1(input: number[][]): void {
   console.log(
-    dijkstra({
+    bfs({
       input,
       startx: 0,
       starty: 0,
@@ -92,7 +92,7 @@ function part1(input: number[][]): void {
 
 function part2(input: number[][]): void {
   console.log(
-    dijkstra({
+    bfs({
       input,
       startx: 0,
       starty: 0,
