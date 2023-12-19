@@ -9,6 +9,36 @@ type GraphNode = {
   value: number;
 };
 
+function printGraph(
+  input: number[][],
+  cameFrom: Map<string, GraphNode>,
+  end: GraphNode
+): void {
+  const path: GraphNode[] = [];
+
+  let current = end;
+  while (current) {
+    path.push(current);
+    current = cameFrom.get(JSON.stringify(current));
+  }
+
+  for (let y = 0; y < input.length; y++) {
+    let line = '';
+    for (let x = 0; x < input[0].length; x++) {
+      const node = path.find((n) => n.x === x && n.y === y);
+      if (node) {
+        if (node.dx === 0 && node.dy === 1) line += 'v';
+        else if (node.dx === 0 && node.dy === -1) line += '^';
+        else if (node.dx === 1 && node.dy === 0) line += '>';
+        else if (node.dx === -1 && node.dy === 0) line += '<';
+      } else {
+        line += input[y][x];
+      }
+    }
+    console.log(line);
+  }
+}
+
 function bfs({
   input,
   startx,
@@ -28,6 +58,7 @@ function bfs({
 }): number {
   const closed: Set<string> = new Set();
   const queue: GraphNode[] = [{ x: startx, y: starty, dx: 0, dy: 0, value: 0 }];
+  const cameFrom: Map<string, GraphNode> = new Map();
 
   while (queue.length > 0) {
     const node = queue.reduce(
@@ -36,7 +67,10 @@ function bfs({
     );
     queue.splice(queue.indexOf(node), 1);
 
-    if (node.x === endx && node.y === endy) return node.value;
+    if (node.x === endx && node.y === endy) {
+      printGraph(input, cameFrom, node);
+      return node.value;
+    }
 
     const seenKey = [node.x, node.y, node.dx, node.dy].join(',');
     if (closed.has(seenKey)) continue;
@@ -56,6 +90,7 @@ function bfs({
           ];
 
     for (const pos of neighbours) {
+      let prev = node;
       let value = node.value;
       let x = node.x;
       let y = node.y;
@@ -66,8 +101,11 @@ function bfs({
 
         if (x >= 0 && y >= 0 && x < input[0].length && y < input.length) {
           value += input[y][x];
+          const newNode = { x, y, dx: pos[0], dy: pos[1], value };
+          cameFrom.set(JSON.stringify(newNode), prev);
+          prev = newNode;
 
-          if (i + 1 >= min) queue.push({ x, y, dx: pos[0], dy: pos[1], value });
+          if (i + 1 >= min) queue.push(newNode);
         }
       }
     }
