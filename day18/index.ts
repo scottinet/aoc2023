@@ -15,7 +15,7 @@ async function parse(inputFileName: string): Promise<DigInstruction[]> {
     instructions.push({
       direction,
       distance: Number(distance),
-      rgb: parseInt(rgb.match(/\(#(.*?)\)/)[1], 16),
+      rgb: rgb.match(/\(#(.*?)\)/)[1],
     });
   }
 
