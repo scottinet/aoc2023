@@ -1,8 +1,6 @@
 import { ButtonComponent } from './models/button.component';
 import { AbstractComponent } from './models/component.abstract';
 
-type CycleState = { index: number; highPulses: number; lowPulses: number };
-
 function getComponentsList(automaton: ButtonComponent): AbstractComponent[] {
   const components: Set<AbstractComponent> = new Set();
   const queue: AbstractComponent[] = [automaton];
@@ -61,7 +59,6 @@ function runLoop(
 
 export function part1(automaton: ButtonComponent): void {
   const components = getComponentsList(automaton);
-  let cycle: CycleState = null;
   let high = 0;
   let low = 0;
 
@@ -74,6 +71,5 @@ export function part1(automaton: ButtonComponent): void {
     low += component.lowPulsesHistory;
   }
   console.log(`High pulses: ${high}, low pulses: ${low}`);
-
   console.log(`Part 1: ${high * low}`);
 }
