@@ -16,6 +16,7 @@
     "sourceRoot": "/",
     "inlineSources": true,
     "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitOverride": true
   }
 }
