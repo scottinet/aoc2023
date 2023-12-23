@@ -1,8 +1,10 @@
 import { AbstractComponent } from './component.abstract';
 
 export class BroadcasterComponent extends AbstractComponent {
-  flip(seq: number): void {
-    const item = this.unqueue(seq);
+  override type = 'BC';
+
+  flip(): void {
+    const item = this.unqueue();
 
     if (item) this.broadcast(item.pulse);
   }

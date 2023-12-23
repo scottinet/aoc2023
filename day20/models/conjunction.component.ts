@@ -2,31 +2,25 @@ import { Pulse } from '../types/pulse.type';
 import { AbstractComponent } from './component.abstract';
 
 export class ConjunctionComponent extends AbstractComponent {
-  private receivedFromParent: { [key: string]: boolean } = {};
+  override type = '&';
+  private receivedFromParent: { [key: string]: number } = {};
 
   protected override addParent(parent: AbstractComponent): void {
     super.addParent(parent);
-    this.receivedFromParent[parent.name] = false;
+    this.receivedFromParent[parent.name] = 0;
   }
 
-  flip(seq: number): void {
-    const item = this.unqueue(seq);
+  flip(): void {
+    const item = this.unqueue();
 
     if (!item) return;
 
-    this.receivedFromParent[item.from] = item.pulse.high;
+    this.receivedFromParent[item.from] = item.pulse.high ? 1 : 0;
+    this.state = Object.values(this.receivedFromParent).every((v) => v === 1)
+      ? 1
+      : 0;
 
-    // State: 0 = all low, 1 = all high, 2 = mixed
-    this.state = -1;
-    Object.values(this.receivedFromParent).forEach((value) => {
-      if (this.state === -1) {
-        this.state = value ? 1 : 0;
-      } else if (this.state !== (value ? 1 : 0)) {
-        this.state = 2;
-      }
-    });
-
-    const newPulse: Pulse = { high: this.state !== 1, seq };
+    const newPulse: Pulse = { high: this.state !== 1, seq: item.pulse.seq };
     this.broadcast(newPulse);
   }
 }

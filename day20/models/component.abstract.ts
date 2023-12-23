@@ -5,7 +5,8 @@ export type QueuedPulse = { from: string; pulse: Pulse };
 export abstract class AbstractComponent {
   private _queue: QueuedPulse[] = [];
   private _children: AbstractComponent[] = [];
-  protected parents: AbstractComponent[] = [];
+  protected _parents: AbstractComponent[] = [];
+  readonly type: string;
   name: string;
   state: number = 0;
   highPulsesHistory: number = 0;
@@ -17,6 +18,7 @@ export abstract class AbstractComponent {
 
   add(pulse: Pulse, from: string): void {
     this._queue.push({ from, pulse });
+    this._queue.sort((a, b) => a.pulse.seq - b.pulse.seq);
   }
 
   connect(child: AbstractComponent): void {
@@ -28,15 +30,25 @@ export abstract class AbstractComponent {
     return this._children;
   }
 
+  get parents(): AbstractComponent[] {
+    return this._parents;
+  }
+
   get hasWork(): boolean {
     return this._queue.length > 0;
   }
 
+  get lowestPulseSequence(): number {
+    return this._queue[0].pulse.seq;
+  }
+
   protected addParent(parent: AbstractComponent): void {
-    this.parents.push(parent);
+    this._parents.push(parent);
   }
 
   protected broadcast(pulse: Pulse): void {
+    pulse = { high: pulse.high, seq: pulse.seq + 1 };
+
     this._children.forEach((child) => {
       // console.log(
       //   `${this.name} -${pulse.high ? 'high' : 'low'}-> ${child.name}`
@@ -46,7 +58,7 @@ export abstract class AbstractComponent {
     this.record(pulse, this._children.length);
   }
 
-  protected unqueue(seq: number): QueuedPulse {
+  protected unqueue(): QueuedPulse {
     return this._queue.shift();
   }
 
@@ -55,5 +67,5 @@ export abstract class AbstractComponent {
     else this.lowPulsesHistory += pulsesSent;
   }
 
-  abstract flip(seq: number): void;
+  abstract flip(): void;
 }
