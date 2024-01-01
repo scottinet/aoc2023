@@ -1,4 +1,4 @@
-import { Point } from './point.type';
+import { Point } from '../../utils/types/point.type';
 
 export type GardenMap = {
   map: string[];
