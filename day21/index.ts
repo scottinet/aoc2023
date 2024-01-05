@@ -1,5 +1,5 @@
 import { chrono } from '@utils/chrono';
-import { Point } from '@utils/types/point.type';
+import { Point } from '@utils/models/point.model';
 import { promises as fs } from 'fs';
 import { explore } from './explore';
 import { part1 } from './part1';

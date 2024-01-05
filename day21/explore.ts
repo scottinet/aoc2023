@@ -1,4 +1,4 @@
-import { Point } from '@utils/types/point.type';
+import { Point } from '@utils/models/point.model';
 import { GardenMap } from './types/garden-map.type';
 
 // This code cannot process the huge number of steps required for
