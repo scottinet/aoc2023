@@ -1,10 +1,5 @@
 import { SettledBrick } from './models/settled-brick.type';
 
-type CollapsableScenario = {
-  collapsable: Array<SettledBrick>;
-  destroyed: SettledBrick;
-};
-
 function countCollapsable(collapsed: SettledBrick): number {
   if (collapsed.supporting.length === 0) return 0;
 
