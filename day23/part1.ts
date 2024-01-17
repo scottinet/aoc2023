@@ -26,15 +26,15 @@ function findEnd(points: HikePoint[]): HikePoint {
 }
 
 function getNeighbours(
-  points: HikePoint[],
+  points: Map<string, HikePoint>,
   point: HikePoint,
   prev: HikePoint
 ): HikePoint[] {
   const neighbours: HikePoint[] = [];
 
   for (const n of point.getNeighbours()) {
-    if (n.toString() === prev.toString()) continue;
-    const neighbour = points.find((p) => p.toString() === n.toString());
+    if (n.equals(prev)) continue;
+    const neighbour = points.get(n.toString());
 
     if (neighbour) {
       if (
@@ -62,16 +62,18 @@ function buildGraph(points: HikePoint[]): HikeSegment {
   };
   const queue: HikeSegment[] = [startSegment];
   const visited = new Set<string>();
+  const pointsMap = new Map<string, HikePoint>();
+  points.forEach((p) => pointsMap.set(p.toString(), p));
 
   while (queue.length > 0) {
     const current = queue.shift();
-    let neighbours = getNeighbours(points, current.end, current.start);
+    let neighbours = getNeighbours(pointsMap, current.end, current.start);
 
     while (neighbours.length === 1) {
       const prev = current.end;
       current.end = neighbours[0];
       current.length++;
-      neighbours = getNeighbours(points, current.end, prev);
+      neighbours = getNeighbours(pointsMap, current.end, prev);
     }
 
     const key = current.start.toString() + '-' + current.end.toString();
