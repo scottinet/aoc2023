@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs';
-import { RaceRecord } from '../models/race-record.type';
+import { RaceRecord } from '../types/race-record.type';
 
 export async function parse(inputFileName: string): Promise<RaceRecord[]> {
   const races: RaceRecord[] = [];

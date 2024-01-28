@@ -1,7 +1,7 @@
 import { chrono } from '../utils/chrono';
-import { DesertMap } from './models/desert-map.type';
 import { parse } from './parse';
 import { part2 } from './part2';
+import { DesertMap } from './types/desert-map.type';
 
 async function main(inputFileName: string): Promise<void> {
   const desertMap = await parse(inputFileName);

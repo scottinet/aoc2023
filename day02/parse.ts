@@ -1,5 +1,5 @@
 import fs from 'fs/promises';
-import { Draw } from './models/draw.type';
+import { Draw } from './types/draw.type';
 
 export async function parseData(fileName: string): Promise<Array<Array<Draw>>> {
   const data = await fs.readFile(fileName, 'utf-8');

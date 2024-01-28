@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs';
-import { Hand } from '../models/hand.type';
+import { Hand } from '../types/hand.type';
 
 export async function parse(inputFileName: string): Promise<Hand[]> {
   const hands: Hand[] = [];

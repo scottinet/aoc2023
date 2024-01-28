@@ -1,8 +1,8 @@
 import assert from 'assert';
-import { Gear } from './models/gear.type';
-import { PartNumber } from './models/part-number.type';
-import { Point } from './models/point.type';
-import { Schematic } from './models/schematic.type';
+import { Gear } from './types/gear.type';
+import { PartNumber } from './types/part-number.type';
+import { Point } from './types/point.type';
+import { Schematic } from './types/schematic.type';
 import { parse } from './utils/parse';
 
 function getPartsAround(schematic: Schematic, point: Point): Array<PartNumber> {

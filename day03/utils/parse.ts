@@ -1,6 +1,6 @@
-import { PartNumber } from 'day3/models/part-number.type';
-import { Schematic } from 'day3/models/schematic.type';
 import fs from 'fs/promises';
+import { PartNumber } from '../types/part-number.type';
+import { Schematic } from '../types/schematic.type';
 
 export async function parse(fileName: string): Promise<Schematic> {
   const data = await fs.readFile(fileName, 'utf-8');

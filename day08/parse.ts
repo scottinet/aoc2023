@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs';
-import { DesertMap } from './models/desert-map.type';
+import { DesertMap } from './types/desert-map.type';
 
 export async function parse(inputFileName: string): Promise<DesertMap> {
   const data = (await fs.readFile(inputFileName, 'utf-8')).split('\n');

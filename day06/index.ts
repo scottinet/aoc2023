@@ -1,7 +1,7 @@
-import { chrono } from '../utils/chrono';
-import { RaceRecord } from './models/race-record.type';
+import { chrono } from '@utils/chrono';
 import { part1 } from './part1';
 import { part2 } from './part2';
+import { RaceRecord } from './types/race-record.type';
 import { parse } from './utils/parse';
 
 async function main(inputFileName: string): Promise<void> {

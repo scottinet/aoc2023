@@ -1,4 +1,4 @@
-import { DesertMap } from './models/desert-map.type';
+import { DesertMap } from './types/desert-map.type';
 
 export function part1(desertMap: DesertMap): void {
   let count = 0;

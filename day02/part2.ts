@@ -1,6 +1,6 @@
 import assert from 'assert';
-import { Draw } from './models/draw.type';
 import { parseData } from './parse';
+import { Draw } from './types/draw.type';
 
 function getMinimumPossibleDraw(game: Array<Draw>): Draw {
   return game.reduce(

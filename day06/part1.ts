@@ -1,4 +1,4 @@
-import { RaceRecord } from './models/race-record.type';
+import { RaceRecord } from './types/race-record.type';
 
 function getWinningRaces(race: RaceRecord): number[] {
   const winning: number[] = [];

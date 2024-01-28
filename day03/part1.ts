@@ -1,6 +1,6 @@
 import assert from 'assert';
-import { PartNumber } from './models/part-number.type';
-import { Schematic } from './models/schematic.type';
+import { PartNumber } from './types/part-number.type';
+import { Schematic } from './types/schematic.type';
 import { parse } from './utils/parse';
 
 function isPartNumber(schematic: Schematic, part: PartNumber): boolean {

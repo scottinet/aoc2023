@@ -1,4 +1,4 @@
-import { Point } from '../utils/types/point.type';
+import { Point } from '@utils/models/point.model';
 import { GardenMap } from './types/garden-map.type';
 
 const MAX_STEPS = 64;

@@ -1,4 +1,4 @@
-import { Hand } from './models/hand.type';
+import { Hand } from './types/hand.type';
 
 export const CARD_TYPES = '23456789TJQKA';
 
