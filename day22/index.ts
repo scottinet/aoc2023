@@ -1,27 +1,12 @@
 import { chrono } from '@utils/chrono';
 import { Point3D } from '@utils/models/point3d.model';
+import { numberToName } from '@utils/number-to-name';
 import { promises as fs } from 'fs';
 import { isPointInBrick, settleTo } from './lib/brick-handling.lib';
 import { SettledBrick } from './models/settled-brick.type';
 import { part1 } from './part1';
 import { part2 } from './part2';
 import { Brick } from './types/brick.type';
-
-function iterationToName(iteration: number): string {
-  let name = '';
-  let remaining = iteration;
-
-  if (remaining === 0) return 'A';
-
-  for (let power = 0; remaining > 0; power++) {
-    const digit = remaining % 26;
-    const letter = String.fromCharCode(65 + digit);
-    name = letter + name;
-    remaining = Math.floor(remaining / 26);
-  }
-
-  return name;
-}
 
 async function parse(inputFileName: string): Promise<Brick[]> {
   const input = await fs.readFile(inputFileName, 'utf8');
@@ -35,7 +20,7 @@ async function parse(inputFileName: string): Promise<Brick[]> {
     const [x2, y2, z2] = end.split(',').map(Number);
 
     bricks.push({
-      name: iterationToName(i),
+      name: numberToName(i),
       start: new Point3D(x1, y1, z1),
       end: new Point3D(x2, y2, z2),
     });
