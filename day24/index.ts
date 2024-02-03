@@ -1,18 +1,28 @@
 import { chrono } from '@utils/chrono';
+import { Point3D } from '@utils/models/point3d.model';
 import { readFile } from 'fs/promises';
 import { InputInfo } from './models/input-info';
 import { Vect3D } from './models/vect3d';
 import { part1 } from './part1';
 import { part2 } from './part2';
 
-async function parse(inputFileName: string): Promise<Vect3D[]> {
+async function parse(inputFileName: string, min, max): Promise<InputInfo> {
   const input = await readFile(inputFileName, 'utf-8');
+  const info: InputInfo = {
+    min,
+    max,
+    vects: [],
+    points: [],
+  };
 
-  return input.split('\n').map((line) => {
+  input.split('\n').forEach((line, index) => {
     const [x, y, z, vx, vy, vz] = line.match(/-?\d+/g).map(Number);
 
-    return new Vect3D(x, y, z, vx, vy, vz);
+    info.vects.push(new Vect3D(vx, vy, vz));
+    info.points.push(new Point3D(x, y, z));
   });
+
+  return info;
 }
 
 async function main(
@@ -20,11 +30,10 @@ async function main(
   min: number,
   max: number
 ): Promise<void> {
-  const input = await parse(inputFileName);
-  const inputInfo = { min, max, vects: input };
+  const input = await parse(inputFileName, min, max);
 
-  chrono<InputInfo>(part1, inputInfo, 'part1');
-  chrono<InputInfo>(part2, inputInfo, 'part2');
+  chrono<InputInfo>(part1, input, 'part1');
+  chrono<InputInfo>(part2, input, 'part2');
 }
 
 const min = parseInt(process.argv[3], 10);
